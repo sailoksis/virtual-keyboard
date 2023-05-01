@@ -37,4 +37,14 @@ document.addEventListener('keydown', function (event) {
       button.classList.remove('active');
     }, 200);
   }
+  textarea.value += event.key;
+});
+
+const textarea = document.querySelector('.main__textarea');
+const keyboardButtons = document.querySelectorAll('#keyboard .buttons');
+
+keyboardButtons.forEach(button => {
+  button.addEventListener('click', function() {
+    textarea.value += this.textContent;
+  });
 });
