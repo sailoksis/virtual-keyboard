@@ -6,6 +6,66 @@ textareaDiv.classList.add('main__textarea');
 
 const keyboardDiv = document.createElement('div');
 keyboardDiv.id = 'keyboard';
+textareaDiv.setAttribute('placeholder', 'Введите текст...');
+textareaDiv.setAttribute('aria-label', 'Текстовое поле для ввода');
+
+containerDiv.append(textareaDiv, keyboardDiv);
+document.body.append(containerDiv);
+
+const layouts = {
+  ru: [
+    ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=','Backspace'],
+    ['Tab','й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\','Del'],
+    ['CapsLock','ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter'],
+    ['Shift','я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.','Shift'],
+    ['Ctrl', 'Win', 'Alt', 'Space','Alt','Ctrl', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
+  ],
+  en: [
+    ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=','Backspace'],
+    ['Tab','q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'],
+    ['CapsLock','a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'" , 'Enter'],
+    ['Shift','z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Shift'],
+    ['Ctrl', 'Win', 'Alt', 'Space','Alt','Ctrl', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
+  ]
+};
+function renderKeyboard(layout) {
+  // Очистим клавиатуру перед началом (на случай, если она уже существует)
+  keyboardDiv.innerHTML = '';
+
+  // Проходимся по каждой строке в раскладке
+  layout.forEach(row => {
+    // Создаём элемент для строки
+    const rowDiv = document.createElement('div');
+    rowDiv.classList.add('keyboard-row'); // Добавим класс для стилей
+
+    // Проходимся по каждой клавише в строке
+    row.forEach(key => {
+      // Создаём элемент для клавиши
+      const keyButton = document.createElement('button');
+      keyButton.classList.add('keyboard-key'); // Добавим класс для стилей
+      keyButton.textContent = key; // Устанавливаем текст клавиши
+
+      // Добавляем клавишу в строку
+      rowDiv.appendChild(keyButton);
+    });
+
+    // Добавляем строку в клавиатуру
+    keyboardDiv.appendChild(rowDiv);
+  });
+}
+
+
+
+
+
+/*const containerDiv = document.createElement('div');
+containerDiv.classList.add('container');
+
+const textareaDiv = document.createElement('textarea');
+textareaDiv.classList.add('main__textarea');
+
+const keyboardDiv = document.createElement('div');
+keyboardDiv.id = 'keyboard';
 
 const textDiv = document.createElement('div');
 textDiv.id = 'main__text';
@@ -70,4 +130,4 @@ keyboardButtons.forEach(button => {
   button.addEventListener('click', function() {
     textarea.value += this.textContent;
   });
-});
+}); */
