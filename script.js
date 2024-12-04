@@ -53,8 +53,77 @@ function renderKeyboard(layout) {
     keyboardDiv.appendChild(rowDiv);
   });
 }
+let currentLayout = localStorage.getItem('keyboardLayout') || 'en';
+
+// Функция для переключения раскладки
+function switchLayout() {
+  currentLayout = currentLayout === 'en' ? 'ru' : 'en'; // Переключаем раскладку
+  renderKeyboard(layouts[currentLayout]); // Перерисовываем клавиатуру
+}
+
+// Обработчик событий для клавиш
+document.addEventListener('keydown', (event) => {
+  // Проверяем, нажаты ли одновременно Shift и Alt
+  if (event.shiftKey && event.altKey) {
+    event.preventDefault(); // Отменяем стандартное действие (если есть)
+    switchLayout(); // Переключаем раскладку
+  }
+});
+
+// Отрисуем начальную раскладку
+renderKeyboard(layouts[currentLayout]);
+const layoutIndicator = document.createElement('div');
+layoutIndicator.textContent = `Current layout: ${currentLayout}`;
+layoutIndicator.classList.add('layout-indicator'); // Класс для стилей
+document.body.appendChild(layoutIndicator);
+
+function updateLayoutIndicator() {
+  layoutIndicator.textContent = `Current layout: ${currentLayout}`;
+}
+
+function switchLayout() {
+  currentLayout = currentLayout === 'en' ? 'ru' : 'en';
+  renderKeyboard(layouts[currentLayout]);
+  updateLayoutIndicator();
+}
 
 
+
+
+function switchLayout() {
+  currentLayout = currentLayout === 'en' ? 'ru' : 'en';
+  localStorage.setItem('keyboardLayout', currentLayout); // Сохраняем раскладку
+  renderKeyboard(layouts[currentLayout]);
+  updateLayoutIndicator();
+}
+
+keyboardDiv.addEventListener('click', (event) => {
+  const target = event.target;
+
+  // Проверяем, является ли элемент клавишей
+  if (!target.classList.contains('keyboard-key')) return;
+
+  const key = target.textContent; // Получаем текст клавиши
+
+  // Логика обработки ввода
+  switch (key) {
+    case 'Backspace':
+      textareaDiv.value = textareaDiv.value.slice(0, -1); // Удаляем последний символ
+      break;
+
+    case 'Enter':
+      textareaDiv.value += '\n'; // Переход на новую строку
+      break;
+
+    case 'Tab':
+      textareaDiv.value += '\t'; // Добавляем табуляцию
+      break;
+
+    default:
+      textareaDiv.value += key; // Добавляем текст клавиши в текстовое поле
+      break;
+  }
+}); //клик по кнопке и кнопка в ареа
 
 
 
